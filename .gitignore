@@ -1,0 +1,5 @@
+# .gitignore ce fichier permet d'ignorer certains fichier présent dans le répertoire
+__pycache__/
+.venv/
+.env
+*.pyc
