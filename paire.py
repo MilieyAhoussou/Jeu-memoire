@@ -3,6 +3,8 @@ victoirejeu = False
 tempo = []
 temp = []
 essaies = 0
+score = 0
+score_multiplier = 200
 while victoirejeu == False :
     i = 0
     jeu = []
@@ -87,11 +89,15 @@ while victoirejeu == False :
             reste = reste-1
             print("Bravo vous avez trouvé une paire il vous reste "+ str(reste)+" paires")
             temp = tempo.copy()
+            score += score_multiplier
+            score_multiplier = 200
             for index, element in enumerate(temp):
                 print(f"{index}: {element}")
             # print(jeu)
         else :
             print("Essayez encore")
+            if score_multiplier > 50:
+                score_multiplier -= 50
             tempo = temp.copy()
     victoirejeu = True
-print("Bravo vous avez gagné avec " +str(essaies)+" essaies")
+print("Bravo vous avez gagné avec " +str(essaies)+" essaies "+"score : "+str(score))
