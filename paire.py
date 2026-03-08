@@ -1,25 +1,30 @@
-import random,sys
-victoirejeu = False
-tempo = []
+#Déclaration des variables
+
+import random,sys #système d'aléatoire
+victoirejeu = False #condition de victoire
+tempo = [] #
 temp = []
-essaies = 0
-score = 0
+essaies = 0 #nombre d'éssais
+score = 0 #score de la partie
 score_multiplier = 200
+
+#Boucle de jeu
 while victoirejeu == False :
     i = 0
-    jeu = []
-    victoire =[]
+    jeu = [] #liste de cartes
+    victoire =[]#vérification de victoire
     print("Combien de carte voulez vous ? (choisissez un nombre paire)")
     difficulte = input(">") 
     if difficulte.isdigit(): #isdigit() permet de vérifier si une chaine de charactère est un nombre
         difficulte = int(difficulte)
     else:
         print("entrez un nombre s'il vous plait")
-        continue
-    if difficulte <= 1:
-        print("entrez un nombre supérieur à 1 s'il vous plait")
-        continue
-    reste = difficulte//2
+        continue #reviens au début de la boucle
+    if difficulte <= 1 or difficulte%2 != 0:
+        print("entrez un nombre supérieur à 1 et paire s'il vous plait")
+        continue #reviens au début de la boucle
+    reste = difficulte//2 #nombre de paire restante
+
     while i < difficulte//2:
         nombre = random.randint(1,20)
         if nombre in jeu:
@@ -44,17 +49,23 @@ while victoirejeu == False :
         print("choisissez une première carte")
         
         premiere = input(">")
+        #vérifier si c'est un nombre
         if premiere.isdigit():
             premiere = int(premiere)
         else:
             print("entrez un nombre s'il vous plait")
             continue
+
+        #vérification de la plage entrée
         if premiere<0 or premiere>difficulte-1:
             print("Les indices sont compris entre 0 et "+ str(difficulte-1))
             continue
+
         elif premiere in victoire:
             print("Vous avez déja trouvé cette paire")
+            essaies -= 1
             continue
+        
         tempo[premiere] = jeu[premiere]
 
         for index, element in enumerate(tempo):
@@ -72,6 +83,7 @@ while victoirejeu == False :
             continue
         elif deuxieme in victoire:
             print("Vous avez déja trouvé cette paire")
+            essaies -= 1
             continue
         elif deuxieme == premiere:
             print("Vous avez déja choisi ce nombre")
