@@ -1,4 +1,46 @@
 #Déclaration des variables
+def afficher_plateau(plateau):
+    for index, element in enumerate(plateau):
+        print(f"{index}: {element}")
+
+def jeu_carte(dif,i):
+    jeu = []
+    while i < dif//2:
+        nombre = random.randint(1,20)
+        if nombre in jeu:
+            continue
+        jeu.append(nombre)
+        jeu.append(nombre)
+        i += 1
+    random.shuffle(jeu)
+    return jeu
+
+def verification_carte(difficulte, victoire, deuxieme_etape):  
+    carte_valide = False
+    while carte_valide == False :
+        carte = input(">")
+        if carte.isdigit():
+            carte = int(carte)
+            carte_valide = True
+        else:
+            print("entrez un nombre s'il vous plait")
+            continue
+        if carte<0 or carte>difficulte-1:
+            print("Les indices sont compris entre 0 et "+ str(difficulte-1))
+            carte_valide = False
+            continue
+        elif carte in victoire:
+            print("Vous avez déja trouvé cette paire")
+            carte_valide = False
+            continue
+
+        if deuxieme_etape == True:
+            if carte == premiere:
+                print("Vous avez déja choisi ce nombre")
+                carte_valide = False
+                continue
+    return carte
+
 
 import random,sys #système d'aléatoire
 victoirejeu = False #condition de victoire
@@ -7,9 +49,12 @@ temp = []
 essaies = 0 #nombre d'éssais
 score = 0 #score de la partie
 score_multiplier = 200
-
+rejouer = False
 #Boucle de jeu
-while victoirejeu == False :
+while victoirejeu == False or rejouer == True :
+    victoirejeu = False
+    tempo = [] #
+    temp = []
     i = 0
     jeu = [] #liste de cartes
     victoire =[]#vérification de victoire
@@ -25,74 +70,38 @@ while victoirejeu == False :
         continue #reviens au début de la boucle
     reste = difficulte//2 #nombre de paire restante
 
-    while i < difficulte//2:
-        nombre = random.randint(1,20)
-        if nombre in jeu:
-            continue
-        jeu.append(nombre)
-        jeu.append(nombre)
-        i += 1
+    jeu = jeu_carte(difficulte,i)
 
     random.shuffle(jeu)
     for i in range(0,difficulte):
         tempo.append("X")
         temp.append("X")
 
-    for index, element in enumerate(tempo):
-        print(f"{index}: {element}")
+    afficher_plateau(tempo)
 
     # print(jeu)
     print("Utilisez les indices pour choisir une carte, il y'en de 0 à "+ str(difficulte-1))
     while(len(victoire) != len(jeu)):
+        tempo  = temp.copy()
         essaies += 1
         print("essai "+str(essaies))
         print("choisissez une première carte")
-        
-        premiere = input(">")
-        #vérifier si c'est un nombre
-        if premiere.isdigit():
-            premiere = int(premiere)
-        else:
-            print("entrez un nombre s'il vous plait")
-            continue
 
-        #vérification de la plage entrée
-        if premiere<0 or premiere>difficulte-1:
-            print("Les indices sont compris entre 0 et "+ str(difficulte-1))
-            continue
-
-        elif premiere in victoire:
-            print("Vous avez déja trouvé cette paire")
-            essaies -= 1
-            continue
+        deuxieme_etape = False
+        premiere = verification_carte(difficulte, victoire, deuxieme_etape)
         
+
         tempo[premiere] = jeu[premiere]
 
-        for index, element in enumerate(tempo):
-            print(f"{index}: {element}")
+        afficher_plateau(tempo)
 
         print("choisissez une deuxième carte")
-        deuxieme = input(">")
-        if deuxieme.isdigit():
-            deuxieme = int(deuxieme)
-        else:
-            print("entrez un nombre s'il vous plait")
-            continue
-        if deuxieme<0 or deuxieme>difficulte-1:
-            print("Les indices sont compris entre 0 et "+ str(difficulte-1))
-            continue
-        elif deuxieme in victoire:
-            print("Vous avez déja trouvé cette paire")
-            essaies -= 1
-            continue
-        elif deuxieme == premiere:
-            print("Vous avez déja choisi ce nombre")
-            continue
+        deuxieme_etape = True
+        deuxieme = verification_carte(difficulte, victoire, deuxieme_etape)
 
         tempo[deuxieme] = jeu[deuxieme]
 
-        for index, element in enumerate(tempo):
-            print(f"{index}: {element}")
+        afficher_plateau(tempo)
         
         if jeu[premiere] == jeu[deuxieme]:
             victoire.append(premiere)
@@ -103,8 +112,7 @@ while victoirejeu == False :
             temp = tempo.copy()
             score += score_multiplier
             score_multiplier = 200
-            for index, element in enumerate(temp):
-                print(f"{index}: {element}")
+            afficher_plateau(temp)
             # print(jeu)
         else :
             print("Essayez encore")
@@ -112,4 +120,10 @@ while victoirejeu == False :
                 score_multiplier -= 50
             tempo = temp.copy()
     victoirejeu = True
-print("Bravo vous avez gagné avec " +str(essaies)+" essaies "+"score : "+str(score))
+    print("Bravo vous avez gagné avec " +str(essaies)+" essaies "+"score : "+str(score))
+    rejouer_input = input("Voulez vous lancez une nouvelle partie ? oui(o)/non(n) : ").lower()
+    if rejouer_input == "o":
+        rejouer = True
+    else :
+        rejouer = False
+print("Aurevoir")
