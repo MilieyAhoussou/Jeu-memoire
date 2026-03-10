@@ -15,7 +15,7 @@ def jeu_carte(dif,i):
     random.shuffle(jeu)
     return jeu
 
-def verification_carte(difficulte, victoire, deuxieme_etape):  
+def verification_carte(difficulte, victoire, premiere):  
     carte_valide = False
     while carte_valide == False :
         carte = input(">")
@@ -34,7 +34,7 @@ def verification_carte(difficulte, victoire, deuxieme_etape):
             carte_valide = False
             continue
 
-        if deuxieme_etape == True:
+        if premiere != None:
             if carte == premiere:
                 print("Vous avez déja choisi ce nombre")
                 carte_valide = False
@@ -87,8 +87,8 @@ while victoirejeu == False or rejouer == True :
         print("essai "+str(essaies))
         print("choisissez une première carte")
 
-        deuxieme_etape = False
-        premiere = verification_carte(difficulte, victoire, deuxieme_etape)
+        premiere = None
+        premiere = verification_carte(difficulte, victoire, premiere)
         
 
         tempo[premiere] = jeu[premiere]
@@ -96,8 +96,8 @@ while victoirejeu == False or rejouer == True :
         afficher_plateau(tempo)
 
         print("choisissez une deuxième carte")
-        deuxieme_etape = True
-        deuxieme = verification_carte(difficulte, victoire, deuxieme_etape)
+
+        deuxieme = verification_carte(difficulte, victoire, premiere)
 
         tempo[deuxieme] = jeu[deuxieme]
 
