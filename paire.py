@@ -1,13 +1,32 @@
 #Déclaration des variables
+
 def afficher_plateau(plateau):
-    for index, element in enumerate(plateau):
-        print(f"{index}: {element}")
+    point = math.sqrt(len(plateau))
+    if float.is_integer(point) is not True : 
+        i = 0
+        while len(plateau) %  point != 0:
+            plus = point + i
+            if len(plateau) %  plus ==0 :
+                point = plus 
+                break
+            moins = point - i
+            if len(plateau) %  moins ==0 : 
+                point = moins 
+                break
+        i +=1
+        colonne = int(point)
+        ligne = int(len(plateau)/colonne)
+        print(np.array(plateau).reshape(ligne, colonne))
+    else :
+        colonne=point
+        ligne = point
+        print(np.array(plateau).reshape(ligne, colonne))
 
 def jeu_carte(dif):
     i = 0
     jeu = []
     while i < dif//2:
-        nombre = random.randint(1,20)
+        nombre = random.randint(1,200)
         if nombre in jeu:
             continue
         jeu.append(nombre)
@@ -40,21 +59,20 @@ def verification_carte(difficulte, victoire, premiere = None):
         break
     return carte
 
-
+import math
+import numpy as np
 import random,sys #système d'aléatoire
 victoirejeu = False #condition de victoire
-paires_trouvé_jeu = [] #
-paires_trouvé = []
-essaies = 0 #nombre d'éssais
-score = 0 #score de la partie
-score_multiplier = 200
 rejouer = False
+
 #Boucle de jeu
 while victoirejeu == False or rejouer == True :
+    essaies = 0 #nombre d'éssais
+    score = 0 #score de la partie
+    score_multiplier = 200
     victoirejeu = False
-    paires_trouvé_jeu = [] #
-    paires_trouvé = []
-    jeu = [] #liste de cartes
+    plateau_etat_manche = [] #
+    plateau_paires_trouve = []
     victoire =[]#vérification de victoire
     print("Combien de carte voulez vous ? (choisissez un nombre paire)")
     difficulte = input(">") 
@@ -68,36 +86,34 @@ while victoirejeu == False or rejouer == True :
         continue #reviens au début de la boucle
     reste = difficulte//2 #nombre de paire restante
 
-    jeu = jeu_carte(difficulte,i)
+    jeu = jeu_carte(difficulte)
 
-    random.shuffle(jeu)
-    for i in range(0,difficulte):
-        paires_trouvé_jeu.append("X")
-        paires_trouvé.append("X")
-
-    afficher_plateau(paires_trouvé_jeu)
+    plateau_etat_manche = ["X"]*difficulte
+    plateau_paires_trouve = ["X"]*difficulte
+    
+    afficher_plateau(plateau_etat_manche)
 
     # print(jeu)
     print("Utilisez les indices pour choisir une carte, il y'en de 0 à "+ str(difficulte-1))
     while(len(victoire) != len(jeu)):
-        paires_trouvé_jeu  = paires_trouvé.copy()
+        plateau_etat_manche  = plateau_paires_trouve.copy()
         essaies += 1
         print("essai "+str(essaies))
         print("choisissez une première carte")
 
         premiere = verification_carte(difficulte, victoire)
         
-        paires_trouvé_jeu[premiere] = jeu[premiere]
+        plateau_etat_manche[premiere] = jeu[premiere]
 
-        afficher_plateau(paires_trouvé_jeu)
+        afficher_plateau(plateau_etat_manche)
 
         print("choisissez une deuxième carte")
 
         deuxieme = verification_carte(difficulte, victoire, premiere)
 
-        paires_trouvé_jeu[deuxieme] = jeu[deuxieme]
+        plateau_etat_manche[deuxieme] = jeu[deuxieme]
 
-        afficher_plateau(paires_trouvé_jeu)
+        afficher_plateau(plateau_etat_manche)
         
         if jeu[premiere] == jeu[deuxieme]:
             victoire.append(premiere)
@@ -105,16 +121,16 @@ while victoirejeu == False or rejouer == True :
             # print(victoire)
             reste = reste-1
             print("Bravo vous avez trouvé une paire il vous reste "+ str(reste)+" paires")
-            paires_trouvé = paires_trouvé_jeu.copy()
+            plateau_paires_trouve = plateau_etat_manche.copy()
             score += score_multiplier
             score_multiplier = 200
-            afficher_plateau(paires_trouvé)
+            afficher_plateau(plateau_paires_trouve)
             # print(jeu)
         else :
             print("Essayez encore")
             if score_multiplier > 50:
                 score_multiplier -= 50
-            paires_trouvé_jeu = paires_trouvé.copy()
+            plateau_etat_manche = plateau_paires_trouve.copy()
     victoirejeu = True
     print("Bravo vous avez gagné avec " +str(essaies)+" essaies "+"score : "+str(score))
     rejouer_input = input("Voulez vous lancez une nouvelle partie ? oui(o)/non(n) : ").lower()
