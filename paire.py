@@ -1,37 +1,21 @@
 #Déclaration des variables
 
 def afficher_plateau(plateau):
-    point = math.sqrt(len(plateau))
-    if float.is_integer(point) is not True : 
-        i = 0
-        while len(plateau) %  point != 0:
-            plus = point + i
-            if len(plateau) %  plus ==0 :
-                point = plus 
-                break
-            moins = point - i
-            if len(plateau) %  moins ==0 : 
-                point = moins 
-                break
-        i +=1
-        colonne = int(point)
-        ligne = int(len(plateau)/colonne)
-        print(np.array(plateau).reshape(ligne, colonne))
-    else :
-        colonne=point
-        ligne = point
-        print(np.array(plateau).reshape(ligne, colonne))
+    #Calcule dub nombre de lignes et de Colonnes pour avoir le tableau le plus carré possible
+    colonne = math.ceil(math.sqrt(len(plateau)))
+    ligne = math.ceil(len(plateau)/colonne)
+
+    #remplir la place restante avec X s'il y'en a
+    plateau = plateau + ["X"]*(ligne*colonne-len(plateau))
+
+    #affichage du plateau
+    print(np.array(plateau).reshape(ligne, colonne))
+
 
 def jeu_carte(dif):
     i = 0
-    jeu = []
-    while i < dif//2:
-        nombre = random.randint(1,200)
-        if nombre in jeu:
-            continue
-        jeu.append(nombre)
-        jeu.append(nombre)
-        i += 1
+    jeu = random.sample(range(200),dif//2)
+    jeu = jeu + jeu
     random.shuffle(jeu)
     return jeu
 
