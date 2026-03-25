@@ -11,13 +11,16 @@ def afficher_plateau(plateau):
     #affichage du plateau
     print(np.array(plateau).reshape(ligne, colonne))
 
-
+#cette fonction crée les paires de cartes qui devront etre trouver par le joueur
 def jeu_carte(dif):
-    i = 0
-    jeu = random.sample(range(200),dif//2)
-    jeu = jeu + jeu
-    random.shuffle(jeu)
-    return jeu
+    cartes = list(range(dif//2))
+    paires_cartes = cartes*2
+    # cartes =[]
+    # for i in range(dif//2):
+    #     cartes.append("Carte_"+str(i))
+    # paires_cartes = cartes*2
+    random.shuffle(paires_cartes)
+    return paires_cartes
 
 #ici premiere est certe un parametre mais pas un parametre exigé. cela veut dire que si le paramètre
 #n'est pas spécifié a l'appel de la fonction dans le code, alors celle-ci prendra automatiquement la valeur qu'on lui a attribué au départ
