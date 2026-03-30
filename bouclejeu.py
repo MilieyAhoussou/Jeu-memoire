@@ -72,3 +72,17 @@ def jouer_partie(difficulte) :
             plateau_etat_manche = plateau_paires_trouve.copy()
 
     print("Bravo vous avez gagné avec " +str(essaies)+" essaies "+"score : "+str(score))
+    return(score,essaies)
+
+def demander_rejouer():
+    while True :
+        rejouer = input("Voulez vous lancez une nouvelle partie ? oui(o)/non(n) : ").lower()
+        if rejouer == "o" :
+            rejouer = True
+            break
+        elif rejouer == "n" :
+            rejouer = False
+            break
+        else :
+            print("Cette entrée n'est pas valide entrez 'o' pour 'oui' ou 'n' pour 'non'")
+    return rejouer
