@@ -72,7 +72,7 @@ def jouer_partie(difficulte) :
             plateau_etat_manche = plateau_paires_trouve.copy()
 
     print("Bravo vous avez gagné avec " +str(essaies)+" essaies "+"score : "+str(score))
-    return(score,essaies)
+    return(score)
 
 def demander_rejouer():
     while True :

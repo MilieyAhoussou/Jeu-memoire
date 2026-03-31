@@ -1,6 +1,10 @@
 import math
 import numpy as np
 import random
+import json
+import os
+
+data = "../data.json"
 
 def afficher_plateau(plateau):
     #Calcule dub nombre de lignes et de Colonnes pour avoir le tableau le plus carré possible
@@ -47,3 +51,22 @@ def verification_carte(difficulte, victoire, premiere = None):
                 continue
         break
     return carte
+
+def demander_nom_joueur():
+    while True :
+        nom_joueur = input("entrez votre nom >")
+        if nom_joueur.isalnum() :
+            break
+        else : 
+            print("Votre pseudo ne peut contenir des espaces")
+            continue
+    return nom_joueur
+
+def donnees_jeu(nom_joueur,score,difficulte):
+    return {"nom":nom_joueur, "score": score, "difficulte": difficulte}
+
+def charger_score():
+    if os.path.exists(data) :
+        print("le fichier existe")
+    else :
+        print("de quoi tu parles ?")
