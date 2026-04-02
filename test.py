@@ -1,3 +1,5 @@
 import fonctions
 
-fonctions.charger_score()
+score = fonctions.charger_score()
+print(score)
+print(type(score))

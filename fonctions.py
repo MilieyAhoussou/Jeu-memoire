@@ -67,6 +67,6 @@ def donnees_jeu(nom_joueur,score,difficulte):
 
 def charger_score():
     if os.path.exists(data) :
-        print("le fichier existe")
+        return []
     else :
-        print("de quoi tu parles ?")
+        return []
