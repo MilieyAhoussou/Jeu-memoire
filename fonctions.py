@@ -4,7 +4,7 @@ import random
 import json
 import os
 
-data = "../data.json"
+data = "data.json"
 
 def afficher_plateau(plateau):
     #Calcule dub nombre de lignes et de Colonnes pour avoir le tableau le plus carré possible
@@ -63,10 +63,24 @@ def demander_nom_joueur():
     return nom_joueur
 
 def donnees_jeu(nom_joueur,score,difficulte):
-    return {"nom":nom_joueur, "score": score, "difficulte": difficulte}
+    return {"Nom":nom_joueur, "Score": score, "Difficulté": difficulte}
 
-def charger_score():
-    if os.path.exists(data) :
-        return []
-    else :
-        return []
+def conversion_json_python(data):
+    with open(data, mode="r", encoding="utf_8") as read_file:
+        score_python = json.load(read_file)
+    return score_python
+
+def conversion_python_json(data,tableau):
+    with open(data, mode="w", encoding="utf_8") as write_file:
+        json.dump(tableau,write_file, indent = 4)
+
+def sauvegarder(nom_joueur,score,difficulte,dataj = data):
+    tableau = conversion_json_python(dataj)
+    tableau.append(donnees_jeu(nom_joueur,score,difficulte))
+    conversion_python_json(dataj,tableau)
+
+# def charger_score():
+#     if os.path.exists(data) :
+#         return [1]
+#     else :
+#         return [0]

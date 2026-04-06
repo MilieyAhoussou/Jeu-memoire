@@ -9,6 +9,7 @@ while rejouer :
     difficulte = bouclejeu.choix_difficulte()
     score = bouclejeu.jouer_partie(difficulte)
     print(fonctions.donnees_jeu(pseudo,score,difficulte))
+    fonctions.sauvegarder(pseudo,score,difficulte)
     rejouer = bouclejeu.demander_rejouer()
     
 print("Aurevoir")
