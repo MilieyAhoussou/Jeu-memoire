@@ -86,3 +86,7 @@ def demander_rejouer():
         else :
             print("Cette entrée n'est pas valide entrez 'o' pour 'oui' ou 'n' pour 'non'")
     return rejouer
+
+def afficher_menu(tableau):
+    for i in tableau:
+        print(i)

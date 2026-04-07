@@ -65,13 +65,13 @@ def demander_nom_joueur():
 def donnees_jeu(nom_joueur,score,difficulte):
     return {"Nom":nom_joueur, "Score": score, "Difficulté": difficulte}
 
-def conversion_json_python(data):
+def conversion_json_python(data = data):
     with open(data, mode="r", encoding="utf_8") as read_file:
         score_python = json.load(read_file)
     return score_python
 
-def conversion_python_json(data,tableau):
-    with open(data, mode="w", encoding="utf_8") as write_file:
+def conversion_python_json(tableau,data = data):
+    with open(data , mode="w", encoding="utf_8") as write_file:
         json.dump(tableau,write_file, indent = 4)
 
 def sauvegarder(nom_joueur,score,difficulte,dataj = data):
@@ -84,3 +84,7 @@ def sauvegarder(nom_joueur,score,difficulte,dataj = data):
 #         return [1]
 #     else :
 #         return [0]
+
+def afficher_tableau(tableau):
+    for i in tableau:
+        print(i)
