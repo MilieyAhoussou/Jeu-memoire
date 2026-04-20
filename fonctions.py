@@ -3,6 +3,7 @@ import numpy as np
 import random
 import json
 import os
+import pandas as pd
 
 data = "data.json"
 
@@ -86,5 +87,5 @@ def sauvegarder(nom_joueur,score,difficulte,dataj = data):
 #         return [0]
 
 def afficher_tableau(tableau):
-    for i in tableau:
-        print(i)
+    df = pd.DataFrame(tableau)
+    print(df)

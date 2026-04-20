@@ -13,7 +13,7 @@ while rejouer :
     if choix_menu == "1":
         pseudo = fonctions.demander_nom_joueur()
         difficulte = bouclejeu.choix_difficulte()
-        score = bouclejeu.menu(difficulte)
+        score = bouclejeu.jouer_partie(difficulte)
         fonctions.sauvegarder(pseudo,score,difficulte)
         rejouer = bouclejeu.demander_rejouer()
     if choix_menu == "2":
